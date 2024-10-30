@@ -8,7 +8,7 @@ const app = express();
 // Allow multiple origins for CORS
 const allowedOrigins = [
   process.env.CLIENT_URL,
-  "https://e-learn-platform-a2yv.vercel.app",
+  "https://lms-platform-bajr.vercel.app",
   "http://localhost:5173",
   "http://127.0.0.1:5173" // Alternative for localhost
 ];
