@@ -88,27 +88,27 @@ export async function checkAuthService() {
   return { success: false, data: null };
 }
 
-export async function mediaUploadService(formData, onProgressCallback) {
-  const file = formData.get('file');
+// export async function mediaUploadService(formData, onProgressCallback) {
+//   const file = formData.get('file');
 
-  // Validate file size (in bytes)
-  const maxFileSize = 10 * 1024 * 1024; // 10 MB
-  if (file.size > maxFileSize) {
-    alert("File size exceeds 10 MB. Please choose a smaller file.");
-    return;
-  }
+//   // Validate file size (in bytes)
+//   const maxFileSize = 10 * 1024 * 1024; // 10 MB
+//   if (file.size > maxFileSize) {
+//     alert("File size exceeds 10 MB. Please choose a smaller file.");
+//     return;
+//   }
 
-  const { data } = await axiosInstance.post("/media/upload", formData, {
-    onUploadProgress: (progressEvent) => {
-      const percentCompleted = Math.round(
-        (progressEvent.loaded * 100) / progressEvent.total
-      );
-      onProgressCallback(percentCompleted);
-    },
-  });
+//   const { data } = await axiosInstance.post("/upload", formData, {
+//     onUploadProgress: (progressEvent) => {
+//       const percentCompleted = Math.round(
+//         (progressEvent.loaded * 100) / progressEvent.total
+//       );
+//       onProgressCallback(percentCompleted);
+//     },
+//   });
 
-  return data;
-}
+//   return data;
+// }
 
 
 // export async function mediaBulkUploadService(formData, onProgressCallback) {
@@ -155,7 +155,7 @@ export async function mediaUploadService(formData, onProgressCallback) {
   }
 
   try {
-    const { data } = await axiosInstance.post("/media/upload", formData, {
+    const { data } = await axiosInstance.post("/upload", formData, {
       onUploadProgress: (progressEvent) => {
         const percentCompleted = Math.round(
           (progressEvent.loaded * 100) / progressEvent.total
@@ -172,7 +172,7 @@ export async function mediaUploadService(formData, onProgressCallback) {
 
 export async function mediaBulkUploadService(formData, onProgressCallback) {
   try {
-    const { data } = await axiosInstance.post("/media/bulk-upload", formData, {
+    const { data } = await axiosInstance.post("/bulk-upload", formData, {
       onUploadProgress: (progressEvent) => {
         const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
         onProgressCallback(percentCompleted);
@@ -187,7 +187,7 @@ export async function mediaBulkUploadService(formData, onProgressCallback) {
 
 export async function mediaDeleteService(id) {
   try {
-    const { data } = await axiosInstance.delete(`/media/delete/${id}`);
+    const { data } = await axiosInstance.delete(`/delete/${id}`);
     return data;
   } catch (error) {
     console.error("Error during media deletion:", error);
