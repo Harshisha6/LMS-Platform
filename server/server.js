@@ -10,7 +10,6 @@ const allowedOrigins = [
   process.env.CLIENT_URL,
   "https://lms-platform-bajr.vercel.app",
   "http://localhost:5173",
-  "http://127.0.0.1:5173" // Alternative for localhost
 ];
 
 app.use(
