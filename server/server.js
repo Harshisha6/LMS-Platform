@@ -12,21 +12,12 @@ const allowedOrigins = [
   "http://localhost:5173",
 ];
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        console.error(`Blocked by CORS: Origin '${origin}' is not allowed.`);
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    methods: ["GET", "POST", "DELETE", "PUT"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,  // Add this if client uses credentials
-  })
-);
+app.use(cors({
+  origin: '*', // Allow all origins
+  methods: ["GET", "POST", "DELETE", "PUT"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+}));
 
 app.use(express.json());
 
