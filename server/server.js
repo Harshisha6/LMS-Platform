@@ -13,7 +13,7 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-  origin: '*', // Allow all origins
+  origin: "https://lms-platform-client.vercel.app",
   methods: ["GET", "POST", "DELETE", "PUT"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
