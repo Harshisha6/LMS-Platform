@@ -22,7 +22,7 @@ app.use(cors({
 app.use(express.json());
 
 // Routes configuration
-app.use("/media", mediaRoutes);
+app.use("/", mediaRoutes);
 
 // Error handler
 app.use((err, req, res, next) => {
