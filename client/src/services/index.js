@@ -111,36 +111,87 @@ export async function mediaUploadService(formData, onProgressCallback) {
 }
 
 
+// export async function mediaBulkUploadService(formData, onProgressCallback) {
+//   const { data } = await axiosInstance.post("/media/bulk-upload", formData, {
+//     onUploadProgress: (progressEvent) => {
+//       const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+//       onProgressCallback(percentCompleted);
+//     },
+//   });
+//   return data;
+// }
+
+// export async function mediaDeleteService(id) {
+//   const { data } = await axiosInstance.delete(`/media/delete/${id}`);
+//   return data;
+// }
+
+// export async function fetchInstructorCourseListService() {
+//   try {
+//     const courseCollectionRef = collection(db, "courses");
+//     const courseSnapshot = await getDocs(courseCollectionRef);
+    
+//     // Map through each document snapshot and get its data
+//     const courses = courseSnapshot.docs.map((doc) => ({
+//       id: doc.id, // Include the document ID
+//       ...doc.data(), // Get the document data
+//     }));
+
+//     return { success: true, data: courses };
+//   } catch (error) {
+//     console.error("Error fetching course list:", error);
+//     return { success: false, message: "Failed to fetch course list" };
+//   }
+// }
+
+export async function mediaUploadService(formData, onProgressCallback) {
+  const file = formData.get('file');
+
+  // Validate file size (in bytes)
+  const maxFileSize = 10 * 1024 * 1024; // 10 MB
+  if (file.size > maxFileSize) {
+    console.error("File size exceeds 10 MB. Please choose a smaller file.");
+    return; // Or handle this case in a user-friendly way
+  }
+
+  try {
+    const { data } = await axiosInstance.post("/media/upload", formData, {
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        onProgressCallback(percentCompleted);
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Error during file upload:", error);
+    throw error; // Rethrow or handle the error appropriately
+  }
+}
+
 export async function mediaBulkUploadService(formData, onProgressCallback) {
-  const { data } = await axiosInstance.post("/media/bulk-upload", formData, {
-    onUploadProgress: (progressEvent) => {
-      const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-      onProgressCallback(percentCompleted);
-    },
-  });
-  return data;
+  try {
+    const { data } = await axiosInstance.post("/media/bulk-upload", formData, {
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+        onProgressCallback(percentCompleted);
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Error during bulk upload:", error);
+    throw error; // Rethrow or handle the error appropriately
+  }
 }
 
 export async function mediaDeleteService(id) {
-  const { data } = await axiosInstance.delete(`/media/delete/${id}`);
-  return data;
-}
-
-export async function fetchInstructorCourseListService() {
   try {
-    const courseCollectionRef = collection(db, "courses");
-    const courseSnapshot = await getDocs(courseCollectionRef);
-    
-    // Map through each document snapshot and get its data
-    const courses = courseSnapshot.docs.map((doc) => ({
-      id: doc.id, // Include the document ID
-      ...doc.data(), // Get the document data
-    }));
-
-    return { success: true, data: courses };
+    const { data } = await axiosInstance.delete(`/media/delete/${id}`);
+    return data;
   } catch (error) {
-    console.error("Error fetching course list:", error);
-    return { success: false, message: "Failed to fetch course list" };
+    console.error("Error during media deletion:", error);
+    throw error; // Rethrow or handle the error appropriately
   }
 }
 
