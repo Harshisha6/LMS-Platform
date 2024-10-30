@@ -13,7 +13,7 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-  origin: "https://lms-platform-client.vercel.app",
+  origin: true,
   methods: ["GET", "POST", "DELETE", "PUT"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
@@ -31,6 +31,10 @@ app.use((err, req, res, next) => {
     success: false,
     message: "Something went wrong",
   });
+});
+
+app.get("/", (req, res) => {
+  res.send("Server is running");
 });
 
 // Export the app as a module for Vercel
